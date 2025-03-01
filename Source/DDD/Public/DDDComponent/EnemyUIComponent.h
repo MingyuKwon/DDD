@@ -4,31 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "BattleUIComponent.generated.h"
+#include "EnemyUIComponent.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), Blueprintable)
-class DDD_API UBattleUIComponent : public UActorComponent
+class DDD_API UEnemyUIComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UBattleUIComponent();
+	UEnemyUIComponent();
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
-	UFUNCTION(BlueprintCallable)
-	virtual bool registerEnemy(int32 positionIndex, AActor* enemyActor, TArray<AActor*> enemyRegisterArray);
-
-	UFUNCTION(BlueprintCallable)
-	virtual void FindEnemyToLock(int32 positionIndex, int defaultUnit, TArray<AActor*> enemyRegisterArray);
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void bridgeCallLockOnOff(bool bLockOn, AActor* enemyActor);
-
 
 public:	
 	// Called every frame

@@ -23,6 +23,49 @@ void UBattleUIComponent::BeginPlay()
 	
 }
 
+bool UBattleUIComponent::registerEnemy(int32 positionIndex, AActor* enemyActor, TArray<AActor*> enemyRegisterArray)
+{
+	if (positionIndex >= enemyRegisterArray.Num()) return false;
+	if (enemyRegisterArray[positionIndex] != nullptr) return false;
+
+	enemyRegisterArray[positionIndex] = enemyActor;
+	UE_LOG(LogTemp, Warning, TEXT("EnemyName : %s"), *enemyActor->GetName());
+
+	return true;
+}
+
+void UBattleUIComponent::FindEnemyToLock(int32 positionIndex, int defaultUnit, TArray<AActor*> enemyRegisterArray)
+{
+	int n = enemyRegisterArray.Num();
+	if (defaultUnit == 0)
+	{
+		for (int i = 0; i < n; i++)
+		{
+			bridgeCallLockOnOff(i == 2, enemyRegisterArray[i]);
+		}
+
+		return;
+	}
+
+	positionIndex += defaultUnit;
+
+	while (positionIndex >= 0 && positionIndex < n)
+	{
+		if (enemyRegisterArray[positionIndex] != nullptr)
+		{
+			for (int i=0; i< n; i++)
+			{
+				bridgeCallLockOnOff(i == positionIndex, enemyRegisterArray[i]);
+			}
+			
+			return;
+		}
+
+		positionIndex += defaultUnit;
+	}
+	
+}
+
 
 // Called every frame
 void UBattleUIComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
