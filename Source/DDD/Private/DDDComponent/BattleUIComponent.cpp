@@ -40,11 +40,8 @@ void UBattleUIComponent::FindEnemyToLock(int32& positionIndex, int defaultUnit, 
 	{
 		for (int i = 0; i < n; i++)
 		{
-			bridgeCallLockOnOff(i == 2, enemyRegisterArray[i]);
+			bridgeCallLockOnOff(i == positionIndex, enemyRegisterArray[i]);
 		}
-
-		positionIndex = 2;
-
 		return;
 	}
 
