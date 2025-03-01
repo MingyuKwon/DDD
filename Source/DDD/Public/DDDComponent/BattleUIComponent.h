@@ -21,10 +21,10 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual bool registerEnemy(int32 positionIndex, AActor* enemyActor, TArray<AActor*> enemyRegisterArray);
+	virtual bool registerEnemy(int32 positionIndex, AActor* enemyActor, UPARAM(ref) TArray<AActor*>& enemyRegisterArray);
 
 	UFUNCTION(BlueprintCallable)
-	virtual void FindEnemyToLock(int32 positionIndex, int defaultUnit, TArray<AActor*> enemyRegisterArray);
+	virtual void FindEnemyToLock(UPARAM(ref) int32& positionIndex, int defaultUnit, const TArray<AActor*>& enemyRegisterArray);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void bridgeCallLockOnOff(bool bLockOn, AActor* enemyActor);

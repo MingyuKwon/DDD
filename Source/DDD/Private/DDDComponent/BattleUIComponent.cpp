@@ -23,18 +23,17 @@ void UBattleUIComponent::BeginPlay()
 	
 }
 
-bool UBattleUIComponent::registerEnemy(int32 positionIndex, AActor* enemyActor, TArray<AActor*> enemyRegisterArray)
+bool UBattleUIComponent::registerEnemy(int32 positionIndex, AActor* enemyActor, TArray<AActor*>& enemyRegisterArray)
 {
 	if (positionIndex >= enemyRegisterArray.Num()) return false;
 	if (enemyRegisterArray[positionIndex] != nullptr) return false;
 
 	enemyRegisterArray[positionIndex] = enemyActor;
-	UE_LOG(LogTemp, Warning, TEXT("EnemyName : %s"), *enemyActor->GetName());
 
 	return true;
 }
 
-void UBattleUIComponent::FindEnemyToLock(int32 positionIndex, int defaultUnit, TArray<AActor*> enemyRegisterArray)
+void UBattleUIComponent::FindEnemyToLock(int32& positionIndex, int defaultUnit, const TArray<AActor*>& enemyRegisterArray)
 {
 	int n = enemyRegisterArray.Num();
 	if (defaultUnit == 0)
@@ -43,6 +42,8 @@ void UBattleUIComponent::FindEnemyToLock(int32 positionIndex, int defaultUnit, T
 		{
 			bridgeCallLockOnOff(i == 2, enemyRegisterArray[i]);
 		}
+
+		positionIndex = 2;
 
 		return;
 	}
@@ -63,6 +64,10 @@ void UBattleUIComponent::FindEnemyToLock(int32 positionIndex, int defaultUnit, T
 
 		positionIndex += defaultUnit;
 	}
+
+	positionIndex = FMath::Clamp(positionIndex, 0, n-1);
+
+	UE_LOG(LogTemp, Warning, TEXT("Cannot FInd Enemy to Lock"));
 	
 }
 
