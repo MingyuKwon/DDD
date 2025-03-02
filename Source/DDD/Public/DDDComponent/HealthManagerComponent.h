@@ -38,10 +38,10 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	float currentHealth = 0;
+	int32 currentHealth = 0;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	float maxHealth = 0;
+	int32 maxHealth = 0;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<FBuff> buffStack;
