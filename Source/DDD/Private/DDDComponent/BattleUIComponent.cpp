@@ -64,7 +64,7 @@ void UBattleUIComponent::FindEnemyToLock(int32& positionIndex, int defaultUnit, 
 
 	positionIndex = FMath::Clamp(positionIndex, 0, n-1);
 
-	UE_LOG(LogTemp, Warning, TEXT("Cannot FInd Enemy to Lock"));
+	UE_LOG(LogTemp, Warning, TEXT("Cannot FInd Enemy to Lock %d"), positionIndex);
 	
 }
 

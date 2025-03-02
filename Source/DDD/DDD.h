@@ -3,3 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
+UENUM(BlueprintType)
+enum class EBuffType : uint8
+{
+    ENone,
+    EPlus,
+    EMultiple,
+    EMinus,
+    EDivide,
+    EMAX
+};
+
