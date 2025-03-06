@@ -12,6 +12,7 @@ enum class EBuffType : uint8
     EMultiple,
     EMinus,
     EDivide,
+    EBullet,
     EMAX
 };
 
