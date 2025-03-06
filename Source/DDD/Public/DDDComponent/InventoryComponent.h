@@ -42,6 +42,9 @@ protected:
 
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int32 bulletLeft = 0;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<FBulletInfo> EquipBullets;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
