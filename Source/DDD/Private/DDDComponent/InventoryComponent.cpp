@@ -17,21 +17,25 @@ UInventoryComponent::UInventoryComponent()
 }
 
 
-// Called when the game starts
-void UInventoryComponent::BeginPlay()
+void UInventoryComponent::ReArrangeRandomArray()
 {
-	Super::BeginPlay();
+	int32 size = RandomBullets.Num();
 
-	// ...
-	
+	for (int i = 0; i<size; i++)
+	{
+		if (RandomBullets[i].BuffType != EBuffType::ENone) continue;
+
+		for (int j = i+1; j < size; j++)
+		{
+			if (RandomBullets[j].BuffType != EBuffType::ENone)
+			{
+				Swap(RandomBullets[i], RandomBullets[j]);
+			}
+		}
+
+	}
 }
 
 
-// Called every frame
-void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
-}
 

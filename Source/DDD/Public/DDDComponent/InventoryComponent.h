@@ -37,8 +37,6 @@ public:
 	UInventoryComponent();
 
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
 
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -50,9 +48,10 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<FBulletInfo> RandomBullets;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	UFUNCTION(BlueprintCallable)
+	void ReArrangeRandomArray();
+	
 
+public:	
 		
 };
