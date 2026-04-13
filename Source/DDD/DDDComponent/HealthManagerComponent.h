@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 
-#include "DDD/DDD.h"
+#include "DDD.h"
 
 
 #include "HealthManagerComponent.generated.h"

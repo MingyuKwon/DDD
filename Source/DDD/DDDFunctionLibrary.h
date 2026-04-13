@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
-#include "DDD/DDD.h"
+#include "DDD.h"
 
 #include "DDDFunctionLibrary.generated.h"
 

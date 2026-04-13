@@ -8,12 +8,15 @@ public class DDD : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
+		// Public/Private 구조 없이 모듈 루트(Source/DDD/)를 include path로 추가
+		PublicIncludePaths.Add(ModuleDirectory);
+
 		PublicDependencyModuleNames.AddRange(new string[]
 		{
 			"Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput",
 			"GameplayAbilities",
 			"GameplayTags",
 			"GameplayTasks"
-        });
+		});
 	}
 }
