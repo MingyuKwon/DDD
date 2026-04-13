@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "DDDComponent/BattleUIComponent.h"
+#include "BattleUIComponent.h"
 
 // Sets default values for this component's properties
 UBattleUIComponent::UBattleUIComponent()

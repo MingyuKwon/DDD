@@ -6,12 +6,17 @@
 #include "GameFramework/GameModeBase.h"
 #include "DDDGameMode.generated.h"
 
-UCLASS(minimalapi)
+/**
+ *  Simple GameMode for a third person game
+ */
+UCLASS(abstract)
 class ADDDGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 
 public:
+	
+	/** Constructor */
 	ADDDGameMode();
 };
 

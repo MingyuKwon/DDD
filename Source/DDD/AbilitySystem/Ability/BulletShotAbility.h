@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilitySystem/Ability/DDDGameplayAbility.h"
+#include "DDDGameplayAbility.h"
 #include "BulletShotAbility.generated.h"
 
 /**
