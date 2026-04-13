@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerState.h"
 #include "DDDPlayerState.generated.h"
 
+class UDDDInventoryComponent;
 /**
  * DDDPlayerState
  *
@@ -23,4 +24,9 @@ public:
 	/** 복제 대상 프로퍼티 등록 */
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+	UDDDInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
+
+private:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UDDDInventoryComponent> InventoryComponent;
 };

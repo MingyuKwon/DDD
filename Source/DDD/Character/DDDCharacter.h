@@ -8,9 +8,9 @@
 #include "AbilitySystemInterface.h"
 #include "DDDCharacter.generated.h"
 
+class UDDDInventoryComponent;
 class UAbilitySystemComponent;
 class UDDDAbilitySystemComponent;
-class UDDDInventoryComponent;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
@@ -28,13 +28,10 @@ public:
 	ADDDCharacter();	
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-	UDDDInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
+	UDDDInventoryComponent* GetInventoryComponent() const;
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UDDDAbilitySystemComponent> AbilitySystemComponent;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UDDDInventoryComponent> InventoryComponent;
 };
 

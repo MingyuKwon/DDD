@@ -29,6 +29,8 @@ class DDD_API ADDDGameplayMode : public AGameModeBase
 	GENERATED_BODY()
 
 public:
+	ADDDGameplayMode();
+
 	// 게임 시작 시 초기화
 	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
 	virtual void InitGameState() override;

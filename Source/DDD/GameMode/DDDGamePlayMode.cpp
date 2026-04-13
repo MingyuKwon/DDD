@@ -5,6 +5,12 @@
 
 #include "DataStruct/FiniteStateMachine.h"
 #include "GameMode/DDDGameplayModeState.h"
+#include "Player/DDDPlayerState.h"
+
+ADDDGameplayMode::ADDDGameplayMode()
+{
+	PlayerStateClass = ADDDPlayerState::StaticClass();
+}
 
 void ADDDGameplayMode::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
 {

@@ -13,6 +13,7 @@
 #include "DDD.h"
 #include "AbilitySystem/DDDAbilitySystemComponent.h"
 #include "ActorComponent/DDDInventoryComponent.h"
+#include "Player/DDDPlayerState.h"
 
 ADDDCharacter::ADDDCharacter()
 {
@@ -38,10 +39,18 @@ ADDDCharacter::ADDDCharacter()
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
 
 	AbilitySystemComponent = CreateDefaultSubobject<UDDDAbilitySystemComponent>(TEXT("DDDAbilitySystemComponent"));
-	InventoryComponent = CreateDefaultSubobject<UDDDInventoryComponent>(TEXT("DDDInventoryComponent"));
 }
 
 UAbilitySystemComponent* ADDDCharacter::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
+}
+
+UDDDInventoryComponent* ADDDCharacter::GetInventoryComponent() const
+{
+	if (ADDDPlayerState* MyPlayerState = GetPlayerState<ADDDPlayerState>())
+	{
+		return MyPlayerState->GetInventoryComponent();
+	}
+	return nullptr;
 }

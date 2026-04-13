@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Player/DDDPlayerState.h"
+
+#include "ActorComponent/DDDInventoryComponent.h"
 #include "Net/UnrealNetwork.h"
 
 ADDDPlayerState::ADDDPlayerState()
@@ -8,6 +10,8 @@ ADDDPlayerState::ADDDPlayerState()
 	// ACharacter 기본값(100.0f)에 맞춰 복제 주기 설정
 	// APlayerState 기본값은 1.0f로 매우 낮음
 	NetUpdateFrequency = 100.0f;
+
+	InventoryComponent = CreateDefaultSubobject<UDDDInventoryComponent>(TEXT("DDDInventoryComponent"));
 }
 
 void ADDDPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
