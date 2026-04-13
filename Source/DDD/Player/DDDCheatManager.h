@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/CheatManager.h"
+#include "AbilitySystem/DDDGameplayTags.h"
 #include "DDDCheatManager.generated.h"
 
 class UDDDInventoryComponent;
