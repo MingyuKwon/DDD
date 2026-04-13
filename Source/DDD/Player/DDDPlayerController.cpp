@@ -9,6 +9,12 @@
 #include "Widget/DDDGameplayHUD.h"
 #include "DDD.h"
 #include "Widgets/Input/SVirtualJoystick.h"
+#include "Player/DDDCheatManager.h"
+
+ADDDPlayerController::ADDDPlayerController()
+{
+	CheatClass = UDDDCheatManager::StaticClass();
+}
 
 void ADDDPlayerController::BeginPlay()
 {

@@ -18,7 +18,10 @@ UCLASS(abstract)
 class ADDDPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+
+public:
+	ADDDPlayerController();
+
 protected:
 
 	/** Input Mapping Contexts */
