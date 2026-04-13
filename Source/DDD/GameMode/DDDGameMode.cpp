@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "DDDGameMode.h"
-#include "DDDCharacter.h"
+#include "GameMode/DDDGameMode.h"
+#include "Character/DDDCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 
 ADDDGameMode::ADDDGameMode()
