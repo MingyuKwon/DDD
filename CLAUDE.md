@@ -23,11 +23,13 @@ UE 5.7 3인칭 스택 전투 게임. C++ 컴포넌트 + Blueprint 구현체 혼�
 
 **Target.cs**: `BuildSettingsVersion.V6` + `EngineIncludeOrderVersion.Unreal5_7` (V5는 UE 5.7과 충돌)
 
-**include 패턴**:
+**include 패턴** (`Source/DDD/`가 include root):
 ```cpp
-#include "DDDComponent/HealthManagerComponent.h"  // Public/ 기준
-#include "DDD/DDD.h"                               // Source/ 기준
+#include "DDDComponent/HealthManagerComponent.h"  // 폴더 prefix + 파일명
+#include "Character/DDDCharacter.h"
+#include "DDD.h"                                   // 루트 파일은 파일명만
 ```
+`"DDD/DDD.h"` 형태는 사용하지 않습니다.
 
 **BlueprintImplementableEvent 주의**:
 `bridgeCallLockOnOff`는 C++에서 구현하면 안 됨 — `BPC_BattleUI` Blueprint에서만 구현.

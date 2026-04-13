@@ -2,54 +2,71 @@
 
 ## 소스 폴더 구조
 
+`Public/Private` 구조 없이 기능 단위 폴더로 구성됩니다. `.h`와 `.cpp`가 같은 폴더에 있습니다.
+
 ```
 Source/
 ├── DDD.Target.cs               # 게임 빌드 타겟
 ├── DDDEditor.Target.cs         # 에디터 빌드 타겟
 └── DDD/
     ├── DDD.Build.cs            # 모듈 빌드 규칙
-    ├── DDD.h                   # 전역 열거형 정의
-    ├── DDD.cpp                 # 모듈 구현
-    ├── DDDCharacter.h/.cpp     # 플레이어 캐릭터
-    ├── DDDGameMode.h/.cpp      # 게임 모드
-    ├── Public/
-    │   ├── DDDFunctionLibrary.h
-    │   └── DDDComponent/
-    │       ├── BattleUIComponent.h
-    │       ├── EnemyUIComponent.h
-    │       ├── HealthManagerComponent.h
-    │       └── InventoryComponent.h
-    └── Private/
-        ├── DDDFunctionLibrary.cpp
-        └── DDDComponent/
-            ├── BattleUIComponent.cpp
-            ├── EnemyUIComponent.cpp
-            ├── HealthManagerComponent.cpp
-            └── InventoryComponent.cpp
+    ├── DDD.h / DDD.cpp         # 전역 열거형 + 모듈 구현
+    ├── DDDFunctionLibrary.h / .cpp
+    ├── DDDLog.h
+    ├── StringFunctionLibrary.h
+    ├── Character/
+    │   ├── DDDCharacter.h
+    │   └── DDDCharacter.cpp
+    ├── GameMode/
+    │   ├── DDDGameMode.h
+    │   └── DDDGameMode.cpp
+    ├── DDDComponent/
+    │   ├── BattleUIComponent.h / .cpp
+    │   ├── EnemyUIComponent.h / .cpp
+    │   ├── HealthManagerComponent.h / .cpp
+    │   └── InventoryComponent.h / .cpp
+    ├── AbilitySystem/
+    │   ├── DDDAbilitySystemComponent.h / .cpp
+    │   ├── DDDAttributeSet.h / .cpp
+    │   ├── DDDGameplayTags.h / .cpp
+    │   └── Ability/
+    │       ├── DDDGameplayAbility.h / .cpp
+    │       └── BulletShotAbility.h / .cpp
+    └── DataStruct/
+        ├── FiniteState.h / .cpp
+        └── FiniteStateMachine.h / .cpp
 ```
 
 ## include 경로 규칙
 
-UBT가 자동으로 추가하는 include 경로:
-- `Source/DDD/` — 모듈 루트
-- `Source/DDD/Public/` — Public 폴더
-- `Source/` — 게임 소스 루트
+`DDD.Build.cs`에 `PublicIncludePaths.Add(ModuleDirectory)`가 설정되어 있어 `Source/DDD/`가 include root입니다.
 
 ```cpp
-// Public/ 기준 — DDDComponent 폴더 안의 헤더
+// 폴더 경로를 prefix로 사용 — Source/DDD/ 기준
 #include "DDDComponent/HealthManagerComponent.h"
+#include "Character/DDDCharacter.h"
+#include "AbilitySystem/DDDAbilitySystemComponent.h"
 
-// Source/ 기준 — 모듈 루트에 있는 헤더
-#include "DDD/DDD.h"
+// 모듈 루트(Source/DDD/)에 있는 파일은 파일명만 사용
+#include "DDD.h"
+#include "DDDFunctionLibrary.h"
+
+// 같은 폴더 안의 파일도 파일명만 사용 가능 (DataStruct/ 등)
+#include "FiniteState.h"
 ```
+
+> **주의**: `"DDD/DDD.h"` 형태는 사용하지 않습니다. `Source/DDD/`가 include root이므로 `"DDD.h"`로 충분합니다.
 
 ## 모듈 의존성
 
 `DDD.Build.cs`:
 ```csharp
+PublicIncludePaths.Add(ModuleDirectory);  // Source/DDD/ 를 include root로 등록
+
 PublicDependencyModuleNames.AddRange(new string[]
 {
-    "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput"
+    "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput",
+    "GameplayAbilities", "GameplayTags", "GameplayTasks"
 });
 ```
 
@@ -57,8 +74,6 @@ PublicDependencyModuleNames.AddRange(new string[]
 ```csharp
 // UI 관련
 PublicDependencyModuleNames.AddRange(new string[] { "UMG", "Slate", "SlateCore" });
-// GAS
-PublicDependencyModuleNames.Add("GameplayAbilities");
 // 물리
 PublicDependencyModuleNames.Add("Chaos");
 ```
