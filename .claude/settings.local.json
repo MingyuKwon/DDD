@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"& 'C:\\\\Program Files \\(x86\\)\\\\Microsoft Visual Studio\\\\Installer\\\\vswhere.exe' -format json -all\")",
+      "Bash(python -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(x.get\\('installationVersion',''\\), x.get\\('installationPath',''\\)\\) for x in data]\")",
+      "Bash(powershell -Command \"& 'C:\\\\Program Files \\(x86\\)\\\\Microsoft Visual Studio\\\\Installer\\\\vswhere.exe' -format json -all -requires Component.Unreal.Ide\")"
+    ]
+  }
+}
