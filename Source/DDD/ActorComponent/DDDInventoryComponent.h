@@ -53,9 +53,11 @@ public:
     void ServerRemoveCurrentBullet(bool bDamageHand);
 
     UFUNCTION(Server, Reliable)
-    void ServerRotateHand(bool bDamageHand, bool bClockwise);
+    void ServerSetCurrentIndex(bool bDamageHand, int32 NewIndex);
 #pragma endregion
 
+	int32 GetCurrentBulletIndex(bool bDamageHand) const { return bDamageHand ? CurrentDamageBulletIndex : CurrentBuffBulletIndex; }
+	int32 GetHandNum(bool bDamageHand) const { return bDamageHand ? DamageBulletHand.Num() : BuffBulletHand.Num(); }
     FBulletCardEntry GetCurrentBullet(bool bDamageHand);
     bool RemoveCurrentBullet(bool bDamageHand);
 
@@ -80,8 +82,6 @@ private:
     bool RemoveBulletFromHand_Internal(const FGameplayTag& BulletType, int32 Scale);
 
     bool RemoveCurrentBullet_Internal(bool bDamageHand);
-
-    void RotateHand_Internal(bool bDamageHand, bool bClockwise);
 #pragma endregion
 
     UPROPERTY(ReplicatedUsing = OnRep_DamageBulletDeck)

@@ -15,13 +15,13 @@ class UDDDInventoryComponent;
  * 콘솔 명령어로 로컬 플레이어의 인벤토리를 조작합니다.
  * PlayerController에 CheatClass로 등록해서 사용합니다.
  *
- * 사용 가능한 태그:
- *   DDD.Bullet.Damage / DDD.Bullet.Minus / DDD.Bullet.Modulo / DDD.Bullet.Multiply
+ * 사용 가능한 태그 (짧은 이름 또는 전체 이름 모두 가능):
+ *   Damage / Minus / Modulo / Multiply
  *
  * 콘솔 명령어 예시:
- *   Inv_AddToDeck DDD.Bullet.Damage 3
- *   Inv_AddToHand DDD.Bullet.Minus 1
- *   Inv_RotateHand true true
+ *   Inv_AddToDeck Damage 3
+ *   Inv_AddToHand Minus 1
+ *   Inv_SetCurrentIndex true 2
  */
 UCLASS()
 class DDD_API UDDDCheatManager : public UCheatManager
@@ -54,9 +54,13 @@ public:
 	UFUNCTION(exec)
 	void Inv_RemoveCurrentBullet(bool bDamageHand);
 
-	/** 핸드 순환. bClockwise=true면 시계 방향 */
+	/** 현재 인덱스를 직접 지정 */
 	UFUNCTION(exec)
-	void Inv_RotateHand(bool bDamageHand, bool bClockwise);
+	void Inv_SetCurrentIndex(bool bDamageHand, int32 NewIndex);
+
+	/** 인덱스를 한 칸 이동. bForward=true면 +1, false면 -1 (순환) */
+	UFUNCTION(exec)
+	void Inv_ShiftIndex(bool bDamageHand, bool bForward);
 
 private:
 

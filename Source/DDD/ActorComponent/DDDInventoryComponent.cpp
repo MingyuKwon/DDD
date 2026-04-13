@@ -91,22 +91,6 @@ bool UDDDInventoryComponent::RemoveCurrentBullet_Internal(bool bDamageHand)
 	return false;
 }
 
-void UDDDInventoryComponent::RotateHand_Internal(bool bDamageHand, bool bClockwise)
-{
-    TArray<FBulletCardEntry>& Hand = bDamageHand ? DamageBulletHand : BuffBulletHand;
-	int32& CurrentIndex = bDamageHand ? CurrentDamageBulletIndex : CurrentBuffBulletIndex;
-
-    int32 MaxHand = Hand.Num();
-    if (bClockwise)
-    {
-        CurrentIndex = (CurrentIndex + 1) % MaxHand;
-    }
-    else
-    {
-        CurrentIndex = (CurrentIndex - 1 + MaxHand) % MaxHand;
-	}
-}
-
 void UDDDInventoryComponent::ServerRemoveCurrentBullet_Implementation(bool bDamageHand)
 {
     if (RemoveCurrentBullet_Internal(bDamageHand))
@@ -222,18 +206,14 @@ void UDDDInventoryComponent::ServerAddBulletToDeck_Implementation(const FGamepla
     }
 }
 
-void UDDDInventoryComponent::ServerRotateHand_Implementation(bool bDamageHand, bool bClockwise)
+void UDDDInventoryComponent::ServerSetCurrentIndex_Implementation(bool bDamageHand, int32 NewIndex)
 {
-    RotateHand_Internal(bDamageHand, bClockwise);
-
-    if(bDamageHand)
-    {
-        OnRep_CurrentDamageBulletIndex();
-    }
-    else
-    {
-        OnRep_CurrentBuffBulletIndex();
-	}
+    TArray<FBulletCardEntry>& Hand = bDamageHand ? DamageBulletHand : BuffBulletHand;
+    int32& CurrentIndex = bDamageHand ? CurrentDamageBulletIndex : CurrentBuffBulletIndex;
+    if (Hand.IsEmpty()) return;
+    CurrentIndex = FMath::Clamp(NewIndex, 0, Hand.Num() - 1);
+    if (bDamageHand) OnRep_CurrentDamageBulletIndex();
+    else             OnRep_CurrentBuffBulletIndex();
 }
 
 void UDDDInventoryComponent::OnRep_DamageBulletDeck()

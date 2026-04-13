@@ -35,11 +35,16 @@ UDDDInventoryComponent* UDDDCheatManager::GetInventory() const
 
 FGameplayTag UDDDCheatManager::ParseTag(const FString& TagName) const
 {
-	FGameplayTag Tag = FGameplayTag::RequestGameplayTag(FName(*TagName), false);
+	// 짧은 이름(예: "Damage")을 입력하면 자동으로 "DDD.Bullet." 프리픽스를 붙임
+	const FString FullName = TagName.Contains(TEXT("."))
+		? TagName
+		: FString::Printf(TEXT("DDD.Bullet.%s"), *TagName);
+
+	FGameplayTag Tag = FGameplayTag::RequestGameplayTag(FName(*FullName), false);
 	if (!Tag.IsValid())
 	{
 		UE_LOG(LogTemp, Warning,
-			TEXT("[Cheat] 유효하지 않은 태그: '%s'. 사용 가능: DDD.Bullet.Damage / DDD.Bullet.Minus / DDD.Bullet.Modulo / DDD.Bullet.Multiply"),
+			TEXT("[Cheat] 유효하지 않은 태그: '%s'. 사용 가능: Damage / Minus / Modulo / Multiply"),
 			*TagName);
 	}
 	return Tag;
@@ -110,13 +115,27 @@ void UDDDCheatManager::Inv_RemoveCurrentBullet(bool bDamageHand)
 	}
 }
 
-void UDDDCheatManager::Inv_RotateHand(bool bDamageHand, bool bClockwise)
+void UDDDCheatManager::Inv_SetCurrentIndex(bool bDamageHand, int32 NewIndex)
 {
 	if (UDDDInventoryComponent* Inv = GetInventory())
 	{
-		Inv->ServerRotateHand(bDamageHand, bClockwise);
-		UE_LOG(LogTemp, Log, TEXT("[Cheat] Hand 회전 (DamageHand=%s, Clockwise=%s)"),
-			bDamageHand ? TEXT("true") : TEXT("false"),
-			bClockwise  ? TEXT("true") : TEXT("false"));
+		Inv->ServerSetCurrentIndex(bDamageHand, NewIndex);
+		UE_LOG(LogTemp, Log, TEXT("[Cheat] CurrentIndex 설정 (DamageHand=%s, Index=%d)"),
+			bDamageHand ? TEXT("true") : TEXT("false"), NewIndex);
+	}
+}
+
+void UDDDCheatManager::Inv_ShiftIndex(bool bDamageHand, bool bForward)
+{
+	if (UDDDInventoryComponent* Inv = GetInventory())
+	{
+		const int32 Num = Inv->GetHandNum(bDamageHand);
+		if (Num <= 0) return;
+
+		const int32 Current = Inv->GetCurrentBulletIndex(bDamageHand);
+		const int32 Next = (Current + (bForward ? 1 : -1) + Num) % Num;
+		Inv->ServerSetCurrentIndex(bDamageHand, Next);
+		UE_LOG(LogTemp, Log, TEXT("[Cheat] Index %d → %d (DamageHand=%s)"),
+			Current, Next, bDamageHand ? TEXT("true") : TEXT("false"));
 	}
 }
